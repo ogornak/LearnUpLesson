@@ -14,21 +14,20 @@ public class Lesson16Application {
 	public static void main(String[] args) {
 		ConfigurableApplicationContext context = SpringApplication.run(Lesson16Application.class, args);
 		Shop shop = context.getBean(ShopImp.class);
-
-		var stories = shop.getCatalog();
-
-		for (Store store : stories){
-			System.out.println(store);
-		}
-
 		System.out.println(shop.getDescriptionByName("iron"));
 
-		shop.addProductToBasket("iron", 1);
+		shop.addProductToBasket("kettle", 1);
 
 		var baskets = shop.getBasket();
 
 		for (Basket basket : baskets){
 			System.out.println(basket);
+		}
+
+		var stories = shop.getCatalog();
+
+		for (Store store : stories){
+			System.out.println(store);
 		}
 
 		shop.buy();

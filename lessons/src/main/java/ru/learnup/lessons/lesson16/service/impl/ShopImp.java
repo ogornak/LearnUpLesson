@@ -7,8 +7,7 @@ import ru.learnup.lessons.lesson16.annotation.Loggable;
 import ru.learnup.lessons.lesson16.annotation.Notifiable;
 import ru.learnup.lessons.lesson16.model.Basket;
 import ru.learnup.lessons.lesson16.model.Store;
-import ru.learnup.lessons.lesson16.repository.BasketRepository;
-import ru.learnup.lessons.lesson16.repository.StoreRepository;
+import ru.learnup.lessons.lesson16.repository.MarketRepository;
 import ru.learnup.lessons.lesson16.service.Shop;
 
 import java.util.List;
@@ -17,43 +16,36 @@ import java.util.Optional;
 @Service
 @Scope("singleton")
 public class ShopImp implements Shop {
-    private StoreRepository storeRepository;
-    private BasketRepository basketRepository;
+    private MarketRepository marketRepository;
 
     @Autowired
-    public ShopImp(StoreRepository storeRepository, BasketRepository basketRepository){
-        this.storeRepository = storeRepository;
-        this.basketRepository = basketRepository;
+    public ShopImp(MarketRepository storeRepository){
+        this.marketRepository = storeRepository;
     }
 
     @Override
     @Loggable
     public List<Store> getCatalog(){
-        return storeRepository.findAll();
+        return marketRepository.findAll();
     }
 
     @Override
     @Loggable
     public List<Basket> getBasket(){
-        return basketRepository.findAll();
+        return marketRepository.findAllBasket();
     }
 
     @Override
     @Loggable
-    public String getDescriptionByName(String name){
-        Optional<Store> storeByName = storeRepository.findById(name);
-        if(storeByName.isPresent()){
-            return storeByName.get().getProduct().getDescription();
-        }
-
-        return null;
+    public String getDescriptionByName(String name) {
+        return marketRepository.findDescriptionByName(name);
     }
 
     @Override
     @Loggable
     public void addProductToBasket(String name, int count) {
         Basket basket = new Basket(name, count);
-        Optional<Store> storeByName = storeRepository.findById(name);
+        Optional<Store> storeByName = marketRepository.findById(name);
         Store store = storeByName.get();
         if(store.getCount() < count){
             System.out.println("Error");
@@ -61,21 +53,24 @@ public class ShopImp implements Shop {
         }
         store.setCount(store.getCount() - count);
 
-        Optional<Basket> basketByName = basketRepository.findById(name);
-        if(basketByName.isPresent()){
-            basket = basketByName.get();
+        Basket basketByName = marketRepository.findBasketByName(name);
+        System.out.println(basketByName);
+        if(basketByName != null){
+            basket = basketByName;
             basket.setCount(basket.getCount() + 1);
+            marketRepository.updateBasket(basket);
         }
-
-        storeRepository.save(store);
-        basketRepository.save(basket);
+        else {
+            marketRepository.saveBasket(basket);
+        }
+        marketRepository.save(store);
     }
 
     @Override
     @Loggable
     @Notifiable
     public void buy() {
-        basketRepository.deleteAll();
+        marketRepository.deleteBasketAll();
     }
 
 }
