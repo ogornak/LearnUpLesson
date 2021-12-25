@@ -1,11 +1,9 @@
-package ru.learnup.lessons.lesson16.service.imp;
+package ru.learnup.lessons.lesson16.service.impl;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import ru.learnup.lessons.lesson16.service.Log;
 

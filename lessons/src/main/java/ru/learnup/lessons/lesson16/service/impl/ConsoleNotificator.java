@@ -1,4 +1,4 @@
-package ru.learnup.lessons.lesson16.service.imp;
+package ru.learnup.lessons.lesson16.service.impl;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
@@ -12,8 +12,8 @@ import ru.learnup.lessons.lesson16.service.Notification;
 @Aspect
 @Service
 @Scope("singleton")
-@Profile("prod")
-public class EmailNotificator implements Notification {
+@Profile("local")
+public class ConsoleNotificator implements Notification {
 
     @Pointcut("@annotation(ru.learnup.lessons.lesson16.annotation.Notifiable)")
     public void sendMessage(){
@@ -21,11 +21,11 @@ public class EmailNotificator implements Notification {
 
     @After("sendMessage()")
     public void notifyAfterMethod(JoinPoint point){
-        System.out.println("EmailNotificator");
+        System.out.println("ConsoleNotificator");
     }
 
     @Override
     public void notify(String message) {
-        System.out.println("Send message");
+        System.out.println(message);
     }
 }
