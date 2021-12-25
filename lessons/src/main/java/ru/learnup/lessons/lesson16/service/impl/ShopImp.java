@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@Scope("singleton")
 public class ShopImp implements Shop {
     private MarketRepository marketRepository;
 

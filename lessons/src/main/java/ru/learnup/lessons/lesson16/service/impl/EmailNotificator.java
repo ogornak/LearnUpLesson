@@ -11,7 +11,6 @@ import ru.learnup.lessons.lesson16.service.Notification;
 
 @Aspect
 @Service
-@Scope("singleton")
 @Profile("prod")
 public class EmailNotificator implements Notification {
 

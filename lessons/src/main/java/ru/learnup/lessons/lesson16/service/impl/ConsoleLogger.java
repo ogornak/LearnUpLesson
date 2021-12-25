@@ -9,7 +9,6 @@ import ru.learnup.lessons.lesson16.service.Log;
 
 @Aspect
 @Service
-//@Scope("singleton")
 public class ConsoleLogger implements Log {
     public ConsoleLogger(){
         System.out.println("Create Logger");

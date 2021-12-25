@@ -11,7 +11,6 @@ import ru.learnup.lessons.lesson16.service.Notification;
 
 @Aspect
 @Service
-@Scope("singleton")
 @Profile("local")
 public class ConsoleNotificator implements Notification {
 
