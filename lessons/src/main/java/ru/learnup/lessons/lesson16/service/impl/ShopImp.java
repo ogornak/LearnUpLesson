@@ -3,6 +3,7 @@ package ru.learnup.lessons.lesson16.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.learnup.lessons.lesson16.annotation.Loggable;
 import ru.learnup.lessons.lesson16.annotation.Notifiable;
 import ru.learnup.lessons.lesson16.model.Basket;
@@ -15,12 +16,8 @@ import java.util.Optional;
 
 @Service
 public class ShopImp implements Shop {
-    private MarketRepository marketRepository;
-
     @Autowired
-    public ShopImp(MarketRepository storeRepository){
-        this.marketRepository = storeRepository;
-    }
+    private MarketRepository marketRepository;
 
     @Override
     @Loggable
@@ -52,8 +49,11 @@ public class ShopImp implements Shop {
         }
         store.setCount(store.getCount() - count);
 
-        Basket basketByName = marketRepository.findBasketByName(name);
-        System.out.println(basketByName);
+        editStoreAndBasket(store, basket);
+    }
+
+    void editStoreAndBasket(Store store, Basket basket) {
+        Basket basketByName = marketRepository.findBasketByName(basket.getName());
         if(basketByName != null){
             basket = basketByName;
             basket.setCount(basket.getCount() + 1);

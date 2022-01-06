@@ -18,7 +18,7 @@ public interface MarketRepository extends JpaRepository<Store, String> {
     @Query(value = "FROM Basket b")
     List<Basket> findAllBasket();
 
-    @Query("FROM Store s JOIN Product p ON s.name = p.name")
+    @Query("FROM Store s JOIN s.product")
     List<Store> findAll();
 
     @Query("FROM Basket b WHERE b.name = ?1")
@@ -29,7 +29,6 @@ public interface MarketRepository extends JpaRepository<Store, String> {
     }
 
     @Modifying
-    @Transactional
     @Query(value = "INSERT INTO Market.Basket (Name, Count) SELECT ?1, ?2", nativeQuery = true)
     void saveBasket(String name, Integer count);
 
@@ -38,12 +37,10 @@ public interface MarketRepository extends JpaRepository<Store, String> {
     }
 
     @Modifying
-    @Transactional
     @Query(value = "UPDATE Market.Basket SET Count = ?2 WHERE Name = ?1", nativeQuery = true)
     void updateBasket(String name, Integer count);
 
     @Modifying
-    @Transactional
     @Query(value = "DELETE Market.Basket", nativeQuery = true)
     void deleteBasketAll();
 }
