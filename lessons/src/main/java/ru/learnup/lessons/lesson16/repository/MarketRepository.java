@@ -4,10 +4,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 import ru.learnup.lessons.lesson16.model.Basket;
 import ru.learnup.lessons.lesson16.model.Store;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
@@ -29,6 +29,7 @@ public interface MarketRepository extends JpaRepository<Store, String> {
     }
 
     @Modifying
+    @Transactional
     @Query(value = "INSERT INTO Market.Basket (Name, Count) SELECT ?1, ?2", nativeQuery = true)
     void saveBasket(String name, Integer count);
 
@@ -37,10 +38,12 @@ public interface MarketRepository extends JpaRepository<Store, String> {
     }
 
     @Modifying
+    @Transactional
     @Query(value = "UPDATE Market.Basket SET Count = ?2 WHERE Name = ?1", nativeQuery = true)
     void updateBasket(String name, Integer count);
 
     @Modifying
+    @Transactional
     @Query(value = "DELETE Market.Basket", nativeQuery = true)
     void deleteBasketAll();
 }

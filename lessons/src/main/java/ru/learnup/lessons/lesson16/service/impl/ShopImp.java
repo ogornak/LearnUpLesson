@@ -3,6 +3,8 @@ package ru.learnup.lessons.lesson16.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import ru.learnup.lessons.lesson16.annotation.Loggable;
 import ru.learnup.lessons.lesson16.annotation.Notifiable;
@@ -39,6 +41,10 @@ public class ShopImp implements Shop {
 
     @Override
     @Loggable
+    @Transactional(
+            timeout = 1,
+            rollbackFor = {RuntimeException.class}
+    )
     public void addProductToBasket(String name, int count) {
         Basket basket = new Basket(name, count);
         Optional<Store> storeByName = marketRepository.findById(name);
@@ -62,6 +68,11 @@ public class ShopImp implements Shop {
         else {
             marketRepository.saveBasket(basket);
         }
+
+        //try {
+        //    Thread.sleep(5000);
+        //} catch (InterruptedException e) {}
+
         marketRepository.save(store);
     }
 
