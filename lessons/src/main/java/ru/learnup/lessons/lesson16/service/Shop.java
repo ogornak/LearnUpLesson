@@ -8,8 +8,8 @@ import java.util.List;
 
 public interface Shop {
     List<Store> getCatalog();
-    String getDescriptionByName(String name);
-    void addProductToBasket(String name, int count) throws Exception;
+    String getDescriptionById(int id);
+    void addProductToBasket(int productId, int count) throws Exception;
     void buy();
     List<Basket> getBasket();
 }

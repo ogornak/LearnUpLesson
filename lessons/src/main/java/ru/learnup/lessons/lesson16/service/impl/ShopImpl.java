@@ -39,8 +39,8 @@ public class ShopImpl implements Shop {
 
     @Override
     @Loggable
-    public String getDescriptionByName(String name) {
-        return marketRepository.findDescriptionByName(name);
+    public String getDescriptionById(int productId) {
+        return marketRepository.findDescriptionById(productId);
     }
 
     @Override
@@ -49,10 +49,9 @@ public class ShopImpl implements Shop {
             timeout = 5,
             rollbackFor = {RuntimeException.class}
     )
-    public void addProductToBasket(String name, int count) throws Exception {
-        Basket basket = new Basket(name, count);
-        Optional<Store> storeByName = marketRepository.findById(name);
-        Store store = storeByName.get();
+    public void addProductToBasket(int productId, int count) throws Exception {
+        Basket basket = new Basket(productId, count);
+        Store store = marketRepository.findByProductId(productId);
         if(store.getCount() < count){
             throw new Exception("Count error");
         }
@@ -62,11 +61,11 @@ public class ShopImpl implements Shop {
     }
 
     void editStoreAndBasket(Store store, Basket basket) {
-        Basket basketByName = marketRepository.findBasketByName(basket.getName());
+        Basket basketByName = marketRepository.findBasketById(basket.getProductId());
+
         if(basketByName != null){
             basket = basketByName;
             basket.setCount(basket.getCount() + 1);
-            marketRepository.updateBasket(basket);
         }
         else {
             marketRepository.saveBasket(basket);

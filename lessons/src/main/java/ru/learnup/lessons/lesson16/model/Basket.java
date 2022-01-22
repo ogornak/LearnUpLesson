@@ -10,17 +10,19 @@ import javax.persistence.*;
 public class Basket {
     @Id
     @GeneratedValue
+    @Column(name = "Id")
     private int id;
 
-    @Column(name = "Name")
-    private String name;
+    @Column(name = "ProductId")
+    private int productId;
+
     @Column(name = "Count")
     private int count;
 
     public Basket(){}
 
-    public Basket(String name, int count){
-        this.name = name;
+    public Basket(int productId, int count){
+        this.productId = productId;
         this.count = count;
     }
 }

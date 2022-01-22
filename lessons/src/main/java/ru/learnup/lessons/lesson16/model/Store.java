@@ -13,8 +13,8 @@ public class Store {
     @GeneratedValue
     private int id;
 
-    @Column(name = "Name")
-    private String name;
+    //@Column(name = "ProductId")
+    //private int productId;
 
     @Column(name = "Price")
     private int price;
@@ -22,12 +22,12 @@ public class Store {
     @Column(name = "Count")
     private int count;
 
-    @JoinColumn(name = "id", referencedColumnName = "id")
+    @JoinColumn(name = "productId", referencedColumnName = "id")
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Product product;
 
     @Override
     public String toString(){
-        return name + " " + price + " " + count + " " + product.getDescription();
+        return product.getName() + " " + price + " " + count + " " + product.getDescription();
     }
 }

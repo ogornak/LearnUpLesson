@@ -19,6 +19,6 @@ public class Product implements Cloneable{
     private String description;
 
     @OneToOne
-    @JoinColumn(name = "Name")
+    @JoinColumn(name = "id")
     private Store store;
 }
