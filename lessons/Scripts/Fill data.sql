@@ -4,9 +4,10 @@ UNION ALL SELECT 'iron', 'new iron'
 UNION ALL SELECT 'phone', 'new phone'
 UNION ALL SELECT 'vacuum', 'new vacuum'
 
-INSERT INTO Market.Store(Name, Price, Count)
-SELECT 'kettle', 200, 10
-UNION ALL SELECT 'iron', 300, 5
-UNION ALL SELECT 'phone', 1499, 1
-UNION ALL SELECT 'vacuum', 700, 2
+INSERT INTO Market.Store(ProductId, Price, Count)
+SELECT 1, 200, 10
+UNION ALL SELECT 2, 300, 5
+UNION ALL SELECT 3, 1499, 1
+UNION ALL SELECT 4, 700, 2
+
 
