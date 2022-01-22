@@ -10,6 +10,9 @@ import java.util.List;
 @Table(name = "Market.Store")
 public class Store {
     @Id
+    @GeneratedValue
+    private int id;
+
     @Column(name = "Name")
     private String name;
 
@@ -19,7 +22,7 @@ public class Store {
     @Column(name = "Count")
     private int count;
 
-    @JoinColumn(name = "name", referencedColumnName = "name")
+    @JoinColumn(name = "id", referencedColumnName = "id")
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Product product;
 

@@ -17,9 +17,13 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ShopImp implements Shop {
-    @Autowired
+public class ShopImpl implements Shop {
     private MarketRepository marketRepository;
+
+    @Autowired
+    public ShopImpl(MarketRepository marketRepository){
+        this.marketRepository = marketRepository;
+    }
 
     @Override
     @Loggable
@@ -42,16 +46,15 @@ public class ShopImp implements Shop {
     @Override
     @Loggable
     @Transactional(
-            timeout = 1,
+            timeout = 5,
             rollbackFor = {RuntimeException.class}
     )
-    public void addProductToBasket(String name, int count) {
+    public void addProductToBasket(String name, int count) throws Exception {
         Basket basket = new Basket(name, count);
         Optional<Store> storeByName = marketRepository.findById(name);
         Store store = storeByName.get();
         if(store.getCount() < count){
-            System.out.println("Error");
-            return;
+            throw new Exception("Count error");
         }
         store.setCount(store.getCount() - count);
 
@@ -68,10 +71,6 @@ public class ShopImp implements Shop {
         else {
             marketRepository.saveBasket(basket);
         }
-
-        //try {
-        //    Thread.sleep(5000);
-        //} catch (InterruptedException e) {}
 
         marketRepository.save(store);
     }

@@ -2,16 +2,16 @@ package ru.learnup.lessons.lesson16.model;
 
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Data
 @Entity
 @Table(name = "Market.Basket")
 public class Basket {
     @Id
+    @GeneratedValue
+    private int id;
+
     @Column(name = "Name")
     private String name;
     @Column(name = "Count")

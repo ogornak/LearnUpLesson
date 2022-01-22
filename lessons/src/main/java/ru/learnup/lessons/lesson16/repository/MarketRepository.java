@@ -12,7 +12,7 @@ import java.util.List;
 
 @Repository
 public interface MarketRepository extends JpaRepository<Store, String> {
-    @Query(value = "SELECT p.Description FROM Market.Product p WHERE p.Name = ?1", nativeQuery = true)
+    @Query(value = "SELECT p.description FROM Product p WHERE p.name = ?1")
     String findDescriptionByName(String name);
 
     @Query(value = "FROM Basket b")
@@ -30,6 +30,7 @@ public interface MarketRepository extends JpaRepository<Store, String> {
 
     @Modifying
     @Transactional
+    //@Query(value = "INSERT INTO Market.Basket (Name, Count) SELECT ?1, ?2", nativeQuery = true)
     @Query(value = "INSERT INTO Market.Basket (Name, Count) SELECT ?1, ?2", nativeQuery = true)
     void saveBasket(String name, Integer count);
 
@@ -38,12 +39,11 @@ public interface MarketRepository extends JpaRepository<Store, String> {
     }
 
     @Modifying
-    @Transactional
-    @Query(value = "UPDATE Market.Basket SET Count = ?2 WHERE Name = ?1", nativeQuery = true)
+    @Query(value = "UPDATE Basket b SET b.count = ?2 WHERE b.name = ?1")
     void updateBasket(String name, Integer count);
 
     @Modifying
     @Transactional
-    @Query(value = "DELETE Market.Basket", nativeQuery = true)
+    @Query(value = "DELETE Basket")
     void deleteBasketAll();
 }

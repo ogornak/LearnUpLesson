@@ -9,6 +9,9 @@ import javax.persistence.*;
 @Table(name = "Market.Product")
 public class Product implements Cloneable{
     @Id
+    @GeneratedValue
+    private int id;
+
     @Column(name = "Name")
     private String name;
 
