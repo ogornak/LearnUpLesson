@@ -1,20 +1,16 @@
 package ru.learnup.lessons.lesson16.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import ru.learnup.lessons.lesson16.annotation.Loggable;
 import ru.learnup.lessons.lesson16.annotation.Notifiable;
-import ru.learnup.lessons.lesson16.model.Basket;
-import ru.learnup.lessons.lesson16.model.Store;
+import ru.learnup.lessons.lesson16.model.BasketEntity;
+import ru.learnup.lessons.lesson16.model.StoreEntity;
 import ru.learnup.lessons.lesson16.repository.MarketRepository;
 import ru.learnup.lessons.lesson16.service.Shop;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ShopImpl implements Shop {
@@ -27,15 +23,18 @@ public class ShopImpl implements Shop {
 
     @Override
     @Loggable
-    public List<Store> getCatalog(){
+    public List<StoreEntity> getCatalog(){
         return marketRepository.findAll();
     }
 
     @Override
     @Loggable
-    public List<Basket> getBasket(){
+    public List<BasketEntity> getBasket(){
         return marketRepository.findAllBasket();
     }
+
+    @Override
+    public StoreEntity findById(int id) { return marketRepository.findById(id); }
 
     @Override
     @Loggable
@@ -50,28 +49,28 @@ public class ShopImpl implements Shop {
             rollbackFor = {RuntimeException.class}
     )
     public void addProductToBasket(int productId, int count) throws Exception {
-        Basket basket = new Basket(productId, count);
-        Store store = marketRepository.findByProductId(productId);
-        if(store.getCount() < count){
+        BasketEntity basketEntity = new BasketEntity(productId, count);
+        StoreEntity storeEntity = marketRepository.findByProductEntityId(productId);
+        if(storeEntity.getCount() < count){
             throw new Exception("Count error");
         }
-        store.setCount(store.getCount() - count);
+        storeEntity.setCount(storeEntity.getCount() - count);
 
-        editStoreAndBasket(store, basket);
+        editStoreAndBasket(storeEntity, basketEntity);
     }
 
-    void editStoreAndBasket(Store store, Basket basket) {
-        Basket basketByName = marketRepository.findBasketById(basket.getProductId());
+    void editStoreAndBasket(StoreEntity storeEntity, BasketEntity basketEntity) {
+        BasketEntity basketEntityByName = marketRepository.findBasketById(basketEntity.getProductId());
 
-        if(basketByName != null){
-            basket = basketByName;
-            basket.setCount(basket.getCount() + 1);
+        if(basketEntityByName != null){
+            basketEntity = basketEntityByName;
+            basketEntity.setCount(basketEntity.getCount() + 1);
         }
         else {
-            marketRepository.saveBasket(basket);
+            marketRepository.saveBasket(basketEntity);
         }
 
-        marketRepository.save(store);
+        marketRepository.save(storeEntity);
     }
 
     @Override

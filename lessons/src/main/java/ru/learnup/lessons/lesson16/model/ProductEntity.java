@@ -7,7 +7,7 @@ import javax.persistence.*;
 @Data
 @Entity
 @Table(name = "Market.Product")
-public class Product implements Cloneable{
+public class ProductEntity implements Cloneable{
     @Id
     @GeneratedValue
     private int id;
@@ -20,5 +20,13 @@ public class Product implements Cloneable{
 
     @OneToOne
     @JoinColumn(name = "id")
-    private Store store;
+    private StoreEntity storeEntity;
+
+    public ProductEntity(){}
+
+    public ProductEntity(int id, String name, String description){
+        this.id = id;
+        this.name = name;
+        this.description = description;
+    }
 }

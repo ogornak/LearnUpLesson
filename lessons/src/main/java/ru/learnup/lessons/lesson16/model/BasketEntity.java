@@ -7,7 +7,7 @@ import javax.persistence.*;
 @Data
 @Entity
 @Table(name = "Market.Basket")
-public class Basket {
+public class BasketEntity {
     @Id
     @GeneratedValue
     @Column(name = "Id")
@@ -19,9 +19,9 @@ public class Basket {
     @Column(name = "Count")
     private int count;
 
-    public Basket(){}
+    public BasketEntity(){}
 
-    public Basket(int productId, int count){
+    public BasketEntity(int productId, int count){
         this.productId = productId;
         this.count = count;
     }

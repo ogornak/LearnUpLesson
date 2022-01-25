@@ -1,15 +1,15 @@
 package ru.learnup.lessons.lesson16.service;
 
-import org.springframework.stereotype.Service;
-import ru.learnup.lessons.lesson16.model.Basket;
-import ru.learnup.lessons.lesson16.model.Store;
+import ru.learnup.lessons.lesson16.model.BasketEntity;
+import ru.learnup.lessons.lesson16.model.StoreEntity;
 
 import java.util.List;
 
 public interface Shop {
-    List<Store> getCatalog();
+    List<StoreEntity> getCatalog();
     String getDescriptionById(int id);
     void addProductToBasket(int productId, int count) throws Exception;
     void buy();
-    List<Basket> getBasket();
+    List<BasketEntity> getBasket();
+    StoreEntity findById(int id);
 }
