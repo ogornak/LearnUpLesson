@@ -27,8 +27,8 @@ public class ShopController {
 
     @GetMapping
     public List<StoreDto> getAll(){
-        final Collection<StoreEntity> storeEntityEntities = shop.getCatalog();
-        return storeEntityEntities.stream()
+        final Collection<StoreEntity> storeEntities = shop.getCatalog();
+        return storeEntities.stream()
                 .map(x -> marketMapper.toDtoStore(x))
                 .collect(Collectors.toList());
     }

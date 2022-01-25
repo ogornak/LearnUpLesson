@@ -22,11 +22,6 @@ public class MarketMapperImpl implements MarketMapper {
     }
 
     @Override
-    public ProductEntity toEntityProduct(ProductDto productDto) {
-        return new ProductEntity(productDto.getId(), productDto.getName(), productDto.getDescription());
-    }
-
-    @Override
     public BasketDto toDtoBasket(BasketEntity basketEntity) {
         return new BasketDto(basketEntity.getProductId(), basketEntity.getCount());
     }

@@ -10,6 +10,5 @@ import ru.learnup.lessons.lesson16.model.StoreEntity;
 public interface MarketMapper {
     StoreDto toDtoStore(StoreEntity storeEntity);
     ProductDto toDtoProduct(ProductEntity store);
-    ProductEntity toEntityProduct(ProductDto storeDto);
     BasketDto toDtoBasket(BasketEntity basketEntity);
 }
