@@ -1,0 +1,32 @@
+
+CREATE SCHEMA Market
+
+DROP TABLE IF EXISTS Market.Basket, Market.Store, Market.Product
+
+CREATE TABLE Market.Product
+(
+	Id INT IDENTITY(1, 1) NOT NULL,
+	Name VARCHAR(100) NOT NULL,
+	Description VARCHAR(255) NOT NULL,
+	CONSTRAINT PK_Product PRIMARY KEY (Id)
+)
+
+CREATE TABLE Market.Store
+(
+	Id INT IDENTITY(1, 1) NOT NULL,
+	ProductId INT NOT NULL,
+	Price INT NOT NULL,
+	Count INT NOT NULL DEFAULT 0,
+	CONSTRAINT PK_Store PRIMARY KEY (Id),
+	CONSTRAINT FK_Store_ProductId FOREIGN KEY (ProductId) REFERENCES Market.Product(Id)
+)
+
+
+CREATE TABLE Market.Basket
+(
+	Id INT IDENTITY(1, 1) NOT NULL,
+	ProductId INT NOT NULL,
+	Count INT NOT NULL DEFAULT 0,
+	CONSTRAINT PK_Basket PRIMARY KEY (Id),
+	CONSTRAINT FK_Basket_ProductId FOREIGN KEY (ProductId) REFERENCES Market.Product(Id)
+)
