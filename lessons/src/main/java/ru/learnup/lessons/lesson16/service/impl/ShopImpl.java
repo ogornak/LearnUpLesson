@@ -80,4 +80,11 @@ public class ShopImpl implements Shop {
         marketRepository.deleteBasketAll();
     }
 
+    @Override
+    public void updateCount(int productId, int count) {
+        StoreEntity storeEntity = marketRepository.findByProductEntityId(productId);
+        storeEntity.setCount(storeEntity.getCount() + 1);
+        marketRepository.save(storeEntity);
+    }
+
 }

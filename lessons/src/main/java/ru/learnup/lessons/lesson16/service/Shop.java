@@ -10,6 +10,7 @@ public interface Shop {
     String getDescriptionById(int id);
     void addProductToBasket(int productId, int count) throws Exception;
     void buy();
+    void updateCount(int productId, int count);
     List<BasketEntity> getBasket();
     StoreEntity findById(int id);
 }
