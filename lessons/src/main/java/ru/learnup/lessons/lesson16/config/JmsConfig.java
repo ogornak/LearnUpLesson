@@ -11,13 +11,13 @@ import ru.learnup.lessons.lesson16.service.Shop;
 @Configuration
 public class JmsConfig {
 
-    @Bean
-    public JmsConsumerService jmsConsumerService(
-            JmsTemplate jmsTemplate,
-            @Value("${spring.activemq.object-queue-name}") String targetQueueName,
-            Shop shop){
-        return new JmsConsumerService(jmsTemplate, targetQueueName, shop);
-    }
+    //@Bean
+    //public JmsConsumerService jmsConsumerService(
+    //        JmsTemplate jmsTemplate,
+    //        @Value("${spring.activemq.object-queue-name}") String targetQueueName,
+    //        Shop shop){
+    //    return new JmsConsumerService(jmsTemplate, targetQueueName, shop);
+    //}
 
     @Bean
     public JmsProducerService jmsProducerService(
